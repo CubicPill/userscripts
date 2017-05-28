@@ -12,7 +12,7 @@ function doeval() {
    if (document.getElementsByClassName("formstyle").length === 0 && document.getElementsByClassName("mynexttask").length === 0) {
       setTimeout(doeval, 100);
    } else if (document.getElementsByClassName("mynexttask").length !== 0) {
-      nextpage();
+      setTimeout(nextpage, 1000);
    } else {
       var questions = document.getElementsByClassName("formstyle");
       for (var i = 0; i < questions.length; ++i) {
@@ -20,7 +20,7 @@ function doeval() {
       }
       document.getElementsByTagName("textarea")[0].value = "没有";
       document.getElementById("next_button").click();
-      setTimeout(nextpage, 500);
+      setTimeout(nextpage, 1000);
    }
 }
 
@@ -32,4 +32,4 @@ function nextpage() {
    }
 }
 
-doeval();
+setTimeout(doeval, 1000);
