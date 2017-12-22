@@ -6,6 +6,8 @@
 // @author       CubicPill
 // @match        https://mooc1-1.chaoxing.com/mycourse/studentstudy*
 // @grant        none
+// @downloadURL  https://raw.githubusercontent.com/CubicPill/userscripts/master/erya.js
+// @updateURL    https://raw.githubusercontent.com/CubicPill/userscripts/master/erya.js
 // ==/UserScript==
 
 (function () {
