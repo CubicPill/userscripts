@@ -8,19 +8,25 @@
 // @grant        none
 // ==/UserScript==
 
+// have bugs when going to the next page
+var if_do_eval = true;
+
 function doeval() {
-   if (document.getElementsByClassName("formstyle").length === 0 && document.getElementsByClassName("mynexttask").length === 0) {
-      setTimeout(doeval, 100);
-   } else if (document.getElementsByClassName("mynexttask").length !== 0) {
-      setTimeout(nextpage, 1000);
-   } else {
+   if (if_do_eval) {
+      if_do_eval = false;
       var questions = document.getElementsByClassName("formstyle");
-      for (var i = 0; i < questions.length; ++i) {
-         questions[i].getElementsByTagName("dd")[0].children[0].children[0].click();
+      if (document.getElementsByClassName("mynexttask").length !== 0) {
+         setTimeout(nextpage, 1000);
+      } else if (question.length !== 0) {
+         for (var i = 0; i < questions.length; ++i) {
+            questions[i].getElementsByTagName("dd")[0].children[0].children[0].click();
+            // just select the first choice(Very Good), if wanna change you should alter the first index
+         }
+         document.getElementsByTagName("textarea")[0].value = "没有";
+         // here is the final comment
+         document.getElementById("next_button").click(); // next page
+         setTimeout(nextpage, 1000);
       }
-      document.getElementsByTagName("textarea")[0].value = "没有";
-      document.getElementById("next_button").click();
-      setTimeout(nextpage, 1000);
    }
 }
 
@@ -32,4 +38,4 @@ function nextpage() {
    }
 }
 
-setTimeout(doeval, 1000);
+setInterval(doeval, 1000);
