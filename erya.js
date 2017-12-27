@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Erya
 // @namespace    https://cubicpill.me/
-// @version      1.2.1
+// @version      1.2.2
 // @description  Disable erya's auto pause
 // @author       CubicPill
 // @match        https://mooc1-1.chaoxing.com/mycourse/studentstudy*
@@ -73,12 +73,16 @@
         var ans = "";
         var url = "https://mooc1-1.chaoxing.com/richvideo/initdatawithviewer?&start=undefined&mid=" + mid;
         $.getJSON(url, function (json) {
-            var options = json[0]["datas"][0]["options"];
-            for (var i = 0; i < options.length; ++i) {
-                if (options[i]["isRight"] === true) {
-                    ans += options[i]["name"];
+            var answers = [];
+            for (var j = 0; j < json.length; ++j) {
+                var options = json[j]["datas"][0]["options"];
+                for (var i = 0; i < options.length; ++i) {
+                    if (options[i]["isRight"] === true) {
+                        answers.push(options[i]["name"]);
+                    }
                 }
             }
+            ans = answers.join(' | ');
             if (ans !== "") {
                 document.querySelector("#answer_to_tp").innerText = "任务点答案: " + ans;
             }
@@ -96,6 +100,7 @@
             if (player.getPlayState() !== 1) {
                 if (player.getPlayState() === 4) { // finished
                     notify("本节视频播放已结束");
+                    document.querySelector("span[title=章节测验]").click();
                     pass = true;
                 } else { // resume playing normally
                     last_sec = player.getPlaySecond();
