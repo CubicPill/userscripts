@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Erya_exam
 // @namespace    https://cubicpill.me/
-// @version      1.0.0
+// @version      1.0.1
 // @description  Copy problem content with one click
 // @author       CubicPill
 // @match        https://mooc1-1.chaoxing.com/exam/test/reVersionTestStartNew*
@@ -12,12 +12,19 @@
 // ==/UserScript==
 function init_clip() {
     var text = null;
+    var cnt = 0;
     do {
         try {
-            text = document.querySelector("div.Cy_TItle > div.clearfix").innerText.split('（）', 1)[0];
+            var raw_text = document.querySelector("div.Cy_TItle > div.clearfix").innerText;
+            var text_arr = raw_text.split('。（', 1);
+            if (text_arr.length === 1) {
+                text_arr = raw_text.split('。', 1);
+            }
+            text = text_arr[0];
         } catch (e) {
+            ++cnt; // prevent page freezing
         }
-    } while (!text);
+    } while (!text && cnt < 5);
     var btn = document.createElement('button');
     btn.innerText = 'Copy';
     btn.id = 'copy-btn';
